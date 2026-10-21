@@ -1,0 +1,26 @@
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import assert from 'node:assert/strict';
+import App from '../src/App';
+import GameScreen from '../src/screens/GameScreen';
+import GameOverScreen from '../src/screens/GameOverScreen';
+import LeaderboardScreen from '../src/screens/LeaderboardScreen';
+
+const home = renderToString(<App/>);
+assert.match(home, /PLAY NOW/);
+assert.match(home, /AWS Cloud Clubs/);
+assert.equal((home.match(/class="hole"/g) || []).length, 9);
+assert.doesNotMatch(home, /name="phone_number"/);
+const round = { events: [], session_id: 'test', startAt: 3500 };
+const ready = renderToString(<GameScreen round={round} highScore={950} onFinish={() => {}}/>);
+assert.match(ready, /READY TO MAKE IT RAIN/);
+assert.match(ready, /TIME LEFT/);
+const over = renderToString(<GameOverScreen round={round} result={{score: 650, hits: []}} onSaved={() => {}} onStandings={() => {}}/>);
+assert.match(over, /SAVE MY SCORE/);
+assert.match(over, /Filière/);
+assert.match(over, /type="checkbox"/);
+const standings = renderToString(<LeaderboardScreen players={[{rank: 1, name: 'Test Champion', filiere: 'TEST', best_score: 950}]} stats={{total_players: 1, total_games: 1}}/>);
+assert.match(standings, /REIGNING CLOUD CHAMPION/);
+assert.match(standings, /950/);
+assert.doesNotMatch(standings, /phone_number/);
+console.log('React rendering checks passed for welcome, ready/gameplay, registration and leaderboard.');

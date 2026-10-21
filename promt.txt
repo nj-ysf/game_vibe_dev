@@ -1,0 +1,1291 @@
+# MASTER PROMPT FOR CODEX — CLOUD WHACK: CHAOS EDITION
+
+## 1. YOUR ROLE
+
+Act as a senior full-stack software engineer, professional game developer, UI/UX designer, and quality assurance engineer.
+
+Your mission is to design, develop, test, and deliver a complete, visually impressive, fully functional web arcade game called:
+
+# CLOUD WHACK: CHAOS EDITION
+
+**Organized by Cloud Clubs — ENSET Mohammedia**
+
+This game will be used at a university stand where students compete individually, one player at a time, to achieve the highest score.
+
+The objective is to create a game that is:
+
+- Extremely fun and competitive.
+- Easy to understand in less than 5 seconds.
+- Playable in just 45 seconds.
+- Visually impressive and professional.
+- Inspired by the Cloud Clubs visual identity.
+- Smooth on laptops and smartphones.
+- Simple to operate at a university stand.
+- Reliable enough for many consecutive players.
+- Capable of saving player information and scores persistently.
+
+**This must be a real, working application, not a mockup or static prototype.**
+
+Do not stop after creating the interface. Implement the complete game, backend, data persistence, leaderboard, validation, and tests.
+
+Make sensible decisions independently. Avoid unnecessary questions and unnecessary infrastructure.
+
+---
+
+# 2. TECHNOLOGY STACK
+
+Use the following technologies.
+
+### Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- Motion for React (Framer Motion) for animations
+- Lucide React for interface icons
+- SVG and CSS for game characters
+- Web Audio API or locally stored audio files for sound effects
+
+### Backend
+
+- Python 3.11+
+- FastAPI
+- Pydantic
+- Uvicorn
+- CSV file for player storage
+- Python standard-library modules for CSV operations and file locking where appropriate
+
+### Architecture
+
+Use a clean frontend/backend separation.
+
+Avoid:
+
+- External databases.
+- Firebase.
+- Supabase.
+- User authentication systems.
+- Paid APIs.
+- Unnecessary third-party services.
+- External image dependencies during gameplay.
+
+The game should work entirely on a local computer with a locally running backend.
+
+---
+
+# 3. CLOUD CLUBS BRANDING
+
+The application belongs to **Cloud Clubs — ENSET Mohammedia**.
+
+The user has provided two reference images:
+
+1. The official Cloud Clubs logo.
+2. A screenshot of the existing Cloud Clubs leaderboard.
+
+Use these references to establish the visual identity.
+
+If these images are available in the workspace, inspect them before implementing the interface.
+
+Preserve the original Cloud Clubs logo. Do not generate an alternative logo.
+
+If the logo is not available, create a placeholder component and document exactly where the real logo should be placed.
+
+Use the logo on:
+
+- Welcome screen.
+- Gameplay header.
+- Game-over screen.
+- Leaderboard.
+- Loading screen, if needed.
+
+## Official color palette
+
+Primary purple: `#4C1572`
+
+Secondary purple: `#49216A`
+
+Dark violet: `#342350`
+
+Deep background: `#291A45`
+
+Card purple: `#543E6D`
+
+Lavender: `#B5A1E5`
+
+White: `#FFFFFF`
+
+Additional accent colors:
+
+- Gold: `#FFD166`
+- Success green: `#63E6BE`
+- Danger red: `#FF6B81`
+
+Use accent colors only for gameplay feedback, highlights, and special characters.
+
+The purple palette must remain dominant.
+
+### Main background gradient
+
+```css
+background: linear-gradient(
+  165deg,
+  #4C1572 0%,
+  #49216A 38%,
+  #342350 75%,
+  #291A45 100%
+);
+```
+
+### Visual direction
+
+Create a premium, playful arcade design featuring:
+
+- Dark purple gradient backgrounds.
+- Rounded cards.
+- Subtle glassmorphism.
+- Soft purple glows.
+- Small stars and sparkles inspired by the logo.
+- Clean white typography.
+- Lavender secondary text.
+- Beautiful hover and click animations.
+- Cartoon cloud characters.
+- Elegant leaderboard styling.
+- Responsive layouts.
+
+Use the existing Cloud Clubs leaderboard screenshot as inspiration for the ranking interface.
+
+Avoid generic dashboards or ordinary administrative UI styling.
+
+The game should look like a custom Cloud Clubs experience.
+
+---
+
+# 4. GAME CONCEPT
+
+Game title:
+
+**CLOUD WHACK: CHAOS EDITION**
+
+Subtitle:
+
+**45 seconds. 9 holes. One champion.**
+
+The game is inspired by Whack-a-Mole, but all characters are clouds.
+
+Cloud characters randomly pop out of nine holes.
+
+The player must hit friendly clouds to earn points while avoiding dangerous clouds.
+
+Each player gets exactly 45 seconds.
+
+Players compete one after another on the same device.
+
+After each round:
+
+1. The game ends.
+2. The final score is displayed.
+3. The player enters their personal information.
+4. Their score is saved to a CSV file.
+5. The leaderboard is updated.
+6. The next player can start.
+
+The player with the highest recorded score is the champion.
+
+---
+
+# 5. GAME CHARACTERS
+
+Create four distinct cloud characters.
+
+Do not use ordinary mole characters.
+
+All characters must visually belong to the same cloud-themed universe.
+
+Prefer custom SVG illustrations with expressive faces, rather than plain emoji.
+
+Use reusable SVG components and CSS animations.
+
+## CHARACTER 1 — HAPPY CLOUD ☁️
+
+**Points: +10**
+
+This is the normal positive character.
+
+### Appearance
+
+- Cute fluffy white cloud.
+- Friendly smiling face.
+- Small expressive eyes.
+- Soft lavender outline or shadow.
+- Slightly rounded cartoon style.
+
+### Behavior
+
+- Appears frequently.
+- Pops out of a random hole.
+- Remains visible according to the current difficulty.
+- Disappears automatically if not hit.
+
+### When clicked
+
+- Add 10 points before combo multipliers.
+- Play a satisfying pop sound.
+- Display a floating `+10` animation.
+- Animate the cloud squashing downward.
+- Increase the successful-hit combo.
+
+## CHARACTER 2 — ROYAL CLOUD ☁️👑
+
+**Points: +30**
+
+This is the rare special character and should be the most visually recognizable mascot.
+
+### Appearance
+
+- Cute fluffy white cloud.
+- Shiny golden crown.
+- Crown slightly tilted.
+- Happy expressive face.
+- Golden sparkles.
+- Soft glowing purple/gold aura.
+
+### Behavior
+
+- Rare appearance, approximately 10% of character spawns.
+- Disappears faster than normal clouds.
+- Moves with a gentle floating animation.
+- Should be exciting to discover.
+
+### When clicked
+
+- Add 30 points before combo multipliers.
+- Play a magical reward sound.
+- Display a golden floating `+30`.
+- Trigger a short golden sparkle burst.
+- Increase the combo counter.
+
+The Royal Cloud should look premium and special, but remain consistent with the Cloud Clubs theme.
+
+## CHARACTER 3 — STORM CLOUD 🌩️
+
+**Points: −20**
+
+This is a dangerous character.
+
+### Appearance
+
+- Dark purple or gray cloud.
+- Angry eyebrows.
+- Small lightning bolt.
+- Red or violet warning glow.
+- Mischievous expression.
+
+### Behavior
+
+- Appears randomly.
+- Looks similar in overall shape to friendly clouds but is clearly distinguishable.
+- Becomes more common as difficulty increases.
+
+### When clicked
+
+- Subtract 20 points.
+- Reset the combo.
+- Display a red `−20`.
+- Play a short error sound.
+- Trigger a subtle screen shake.
+
+The score must never become negative.
+
+## CHARACTER 4 — CHAOS CLOUD 🌪️
+
+**Points: −10**
+
+This is a trickster character.
+
+### Appearance
+
+- Purple cloud with a funny expression.
+- Mischievous eyes.
+- Swirling details.
+- Playful but suspicious appearance.
+
+### Behavior
+
+- Uses a slightly unpredictable pop-up animation.
+- May wiggle or bounce to distract the player.
+- Appears more frequently during Chaos Mode.
+
+### When clicked
+
+- Subtract 10 points.
+- Reset the combo.
+- Display a floating `−10`.
+- Trigger a funny reaction animation.
+- Play a comical sound.
+
+All characters must have visually distinct silhouettes, expressions, or accessories so they remain recognizable without relying only on color.
+
+---
+
+# 6. GAME BOARD
+
+Create a 3×3 grid containing nine holes.
+
+Each hole should have:
+
+- A dark elliptical opening.
+- A subtle shadow.
+- A raised border or rim.
+- Depth effects.
+- A cloud emerging from behind the hole.
+- Smooth clipping and pop-up animations.
+
+The holes should resemble a polished cartoon arcade board.
+
+### Interaction
+
+The player clicks or taps a visible character.
+
+Requirements:
+
+- Each appearance can only be hit once.
+- Clicking an empty hole does nothing.
+- Characters must not register hits after disappearing.
+- Characters must not be clickable before the game starts.
+- Characters must not be clickable after the timer expires.
+- Avoid duplicate click/touch events.
+- Avoid accidental text selection and double-tap zoom.
+- Ensure responsive hit targets.
+
+### Spawning
+
+Implement a reliable character spawning system.
+
+- Select an available hole randomly.
+- Select a character using weighted probabilities.
+- Never spawn a second character inside an occupied hole.
+- Allow multiple active characters during later stages.
+- Use independent appearance IDs to prevent stale clicks.
+- Remove all active characters when the game ends.
+- Properly clean up timers when the component unmounts.
+
+Avoid memory leaks and race conditions.
+
+---
+
+# 7. GAME DURATION AND DIFFICULTY
+
+Each game lasts exactly **45 seconds**.
+
+Use a monotonic timer such as `performance.now()` for the frontend countdown.
+
+The game becomes progressively harder.
+
+| Elapsed time | Mode | Visibility |
+|---|---|---|
+| 0–10 seconds | EASY | 1500 ms |
+| 10–20 seconds | MEDIUM | 1000 ms |
+| 20–30 seconds | HARD | 700 ms |
+| 30–45 seconds | CHAOS | 500–650 ms |
+
+### Easy Mode
+
+- One active cloud at a time.
+- Slow spawning.
+- Mostly friendly clouds.
+- Simple gameplay.
+
+### Medium Mode
+
+- Faster spawning.
+- More dangerous clouds.
+- Occasional simultaneous appearances.
+
+### Hard Mode
+
+- Fast character movement.
+- Short visibility duration.
+- More simultaneous characters.
+- Increased concentration required.
+
+### CHAOS MODE
+
+At 30 seconds elapsed:
+
+- Display a dramatic "CHAOS MODE!" animation.
+- Play a special sound.
+- Intensify the purple glow.
+- Increase spawn frequency.
+- Allow multiple clouds to appear simultaneously.
+- Add small decorative particles.
+- Make gameplay exciting without making it impossible.
+
+The last 15 seconds should be the most intense part of the round.
+
+Do not use excessive screen shaking or flashing effects.
+
+---
+
+# 8. SCORING SYSTEM
+
+Use the following base points.
+
+| Character | Points |
+|---|---|
+| Happy Cloud | +10 |
+| Royal Cloud | +30 |
+| Storm Cloud | −20 |
+| Chaos Cloud | −10 |
+
+## Combo system
+
+Reward consecutive successful hits.
+
+| Consecutive successful hits | Multiplier |
+|---|---|
+| 0–2 | ×1 |
+| 3–4 | ×1.5 |
+| 5–9 | ×2 |
+| 10+ | ×3 |
+
+Apply the multiplier to the successful hit that reaches the threshold.
+
+Examples:
+
+- Third consecutive Happy Cloud: 15 points.
+- Fifth consecutive Happy Cloud: 20 points.
+- Tenth consecutive Royal Cloud: 90 points.
+
+A combo resets when:
+
+- The player hits a Storm Cloud.
+- The player hits a Chaos Cloud.
+- The player misses a friendly cloud.
+
+A missed dangerous cloud does not reset the combo.
+
+Negative points are never multiplied.
+
+Use integer scores and consistent rounding.
+
+The total score must never fall below zero.
+
+### Visual feedback
+
+Show:
+
+- Floating positive and negative points.
+- Combo indicators.
+- Animated score updates.
+- Special Royal Cloud effects.
+- New personal record celebration.
+- High-score-to-beat indicator.
+
+---
+
+# 9. GAME SCREENS
+
+Implement five primary screens.
+
+## SCREEN 1 — WELCOME
+
+This screen should attract students walking past the stand.
+
+Display:
+
+- Official Cloud Clubs logo.
+- Game title: CLOUD WHACK.
+- Subtitle: CHAOS EDITION.
+- Tagline: "45 seconds. 9 holes. One champion."
+- Animated Royal Cloud mascot.
+- Large glowing "PLAY NOW" button.
+- "VIEW LEADERBOARD" button.
+- Short gameplay instructions.
+- Current highest score.
+
+Add subtle floating stars and clouds in the background.
+
+The main call to action must be immediately obvious.
+
+## SCREEN 2 — READY
+
+Display:
+
+"Hit the happy clouds. Catch the Royal Cloud. Avoid the storms!"
+
+Then animate:
+
+3
+
+2
+
+1
+
+GO!
+
+Use large typography and playful animations.
+
+Gameplay must not begin before GO.
+
+## SCREEN 3 — GAMEPLAY
+
+Display:
+
+- Small Cloud Clubs logo.
+- Current score.
+- Remaining time.
+- Combo multiplier.
+- Difficulty indicator.
+- High score to beat.
+- Nine-hole game board.
+- Sound toggle.
+
+Keep the interface uncluttered.
+
+The timer and score should be readable from a distance.
+
+For the final five seconds, emphasize the countdown.
+
+## SCREEN 4 — GAME OVER
+
+When the 45 seconds expire:
+
+- Stop the game.
+- Freeze the final score.
+- Disable the board.
+- Play a game-over sound.
+- Show the final score with a celebration animation.
+- Show a message based on performance.
+
+Example messages:
+
+- "Cloud Champion!"
+- "Storm Survivor!"
+- "Lightning Reflexes!"
+- "Nice Try, Cloud Warrior!"
+
+Then display the player registration form.
+
+### Registration fields
+
+**Full Name** — required.
+
+**Filière** — required.
+
+**Phone Number** — required.
+
+Use labels:
+
+- Full Name
+- Filière
+- Phone Number
+
+Example:
+
+Full Name: Youssef Naji
+
+Filière: BDCC
+
+Phone Number: 0612345678
+
+Button:
+
+**SAVE MY SCORE**
+
+Display loading and error states during submission.
+
+Do not ask for personal information before the game.
+
+After saving, show the player's rank and best score.
+
+## SCREEN 5 — LEADERBOARD
+
+Create a beautiful leaderboard based on the supplied Cloud Clubs standings screenshot.
+
+Display:
+
+- Cloud Clubs logo.
+- LIVE STANDINGS.
+- Title: CLOUD CHAMPIONS.
+- Number of unique players.
+- Total games played.
+- Ranked player list.
+- Special top-three styling.
+- Current champion highlight.
+
+Example:
+
+1. Sara — BDCC — 980 pts
+2. Youssef — BDCC — 850 pts
+3. Amine — GI — 720 pts
+4. Omar — GE — 610 pts
+
+The top player should have a golden crown.
+
+Use purple rounded cards, lavender highlights, and subtle animations.
+
+Add:
+
+- "PLAY AGAIN" button.
+- "BACK TO HOME" button.
+
+Refresh the leaderboard after each successful submission and when the leaderboard screen opens.
+
+Optionally poll every 10 seconds while the leaderboard is visible.
+
+Never display phone numbers publicly.
+
+---
+
+# 10. PLAYER REGISTRATION AND CSV STORAGE
+
+This requirement is extremely important.
+
+Store all player records in a CSV file:
+
+`backend/data/players.csv`
+
+Use the following columns:
+
+```csv
+phone_number,name,filiere,best_score,attempts,updated_at
+```
+
+Example:
+
+```csv
+phone_number,name,filiere,best_score,attempts,updated_at
+0612345678,Youssef Naji,BDCC,850,2,2026-10-21T20:30:00Z
+0698765432,Amine,GI,720,1,2026-10-21T20:35:00Z
+```
+
+## Unique player identification
+
+Use the normalized phone number as the primary key.
+
+One phone number corresponds to one player record.
+
+### Moroccan phone number normalization
+
+Accept:
+
+- 0612345678
+- +212612345678
+- 00212612345678
+- 0712345678
+
+Normalize numbers to the Moroccan local format.
+
+For example:
+
+`+212612345678` becomes `0612345678`.
+
+Validate that the result is a valid Moroccan mobile number beginning with 06 or 07.
+
+Store phone numbers as strings to preserve leading zeros.
+
+Reject invalid numbers with a clear error message.
+
+## First-time player
+
+If the phone number is not already in the CSV:
+
+1. Create a new record.
+2. Save the player's name.
+3. Save the filière.
+4. Save the final score as best_score.
+5. Set attempts to 1.
+6. Save the timestamp.
+
+## Returning player
+
+If the phone number already exists:
+
+1. Do not create another row.
+2. Increase attempts by one.
+3. Compare the new score with the previous best.
+4. Keep the highest score.
+5. Update the timestamp.
+6. Preserve the existing name and filière.
+
+Use:
+
+```python
+best_score = max(previous_best_score, new_score)
+```
+
+### Example
+
+First attempt:
+
+Youssef: 650 points.
+
+CSV best_score: 650.
+
+Second attempt:
+
+Youssef: 900 points.
+
+CSV best_score: 900.
+
+Third attempt:
+
+Youssef: 400 points.
+
+CSV best_score: 900.
+
+Attempts: 3.
+
+The leaderboard must show Youssef only once.
+
+### New personal record
+
+If a returning player beats their previous score, display:
+
+"NEW PERSONAL BEST!"
+
+Show the previous and new scores.
+
+If the player does not beat their record, display:
+
+"Your best score is still 900!"
+
+---
+
+# 11. CSV RELIABILITY
+
+Implement safe CSV persistence.
+
+Requirements:
+
+- Automatically create the CSV file if missing.
+- Write headers automatically.
+- Use UTF-8.
+- Use proper CSV quoting.
+- Prevent CSV formula injection.
+- Use locking for read-modify-write operations.
+- Use atomic replacement when saving.
+- Keep a safe backup strategy.
+- Do not silently overwrite corrupted data.
+- Do not expose the CSV through the frontend server.
+- Keep actual participant data out of Git.
+- Ensure CSV storage survives application restarts.
+
+The CSV file is the authoritative player database.
+
+Use a single backend process for the initial deployment, or implement inter-process locking if supporting multiple workers.
+
+Do not rely on an in-memory lock alone when multiple processes may write to the same file.
+
+---
+
+# 12. BACKEND API
+
+Build a REST API using FastAPI.
+
+## POST `/api/game/start`
+
+Create a new game session.
+
+Return a unique session identifier or signed token and the server-authoritative round start information.
+
+Each session can be submitted only once.
+
+Do not expose secrets to the frontend.
+
+## POST `/api/scores`
+
+Accept:
+
+```json
+{
+  "session_id": "session-token",
+  "name": "Youssef Naji",
+  "filiere": "BDCC",
+  "phone_number": "0612345678",
+  "score": 850
+}
+```
+
+Validate:
+
+- Required fields.
+- Name length.
+- Filière length.
+- Moroccan phone number.
+- Score type and bounds.
+- Session validity.
+- Session completion.
+- Duplicate submission attempts.
+
+Return:
+
+```json
+{
+  "success": true,
+  "best_score": 850,
+  "attempts": 2,
+  "is_new_record": true,
+  "rank": 3
+}
+```
+
+Never return the player's phone number in public leaderboard responses.
+
+## GET `/api/leaderboard`
+
+Return all players sorted by best_score descending.
+
+Include:
+
+- Rank.
+- Name.
+- Filière.
+- Best score.
+
+Use deterministic tie-breaking, for example by earlier record timestamp and then a stable internal identifier.
+
+Do not expose phone numbers or full CSV records.
+
+## GET `/api/stats`
+
+Return:
+
+- Total unique players.
+- Total games played.
+- Highest score.
+
+## GET `/api/health`
+
+Return the backend health status.
+
+---
+
+# 13. GAME SESSION SECURITY
+
+Avoid blindly trusting client-submitted scores.
+
+At minimum:
+
+- Generate unique game sessions on the backend.
+- Enforce one submission per session.
+- Validate server-side round duration.
+- Reject expired sessions.
+- Reject impossible scores.
+- Reject malformed requests.
+- Rate-limit score submission endpoints.
+- Prevent replaying completed sessions.
+
+Prefer implementing server-generated character spawn events and server-side hit validation.
+
+If implementing authoritative gameplay:
+
+1. Generate character types, holes, and appearance times on the server.
+2. Associate events with the game session.
+3. Record or validate hits against active events.
+4. Compute the final score on the server.
+5. Use the server-calculated score for CSV storage.
+
+If the full authoritative implementation is too complex for the MVP, implement the simpler session-validated approach, clearly document its anti-cheat limitations, and do not pretend it is cheat-proof.
+
+Keep the project practical for a university stand.
+
+---
+
+# 14. ONE PLAYER AT A TIME
+
+The application is intended for a shared device.
+
+Implement a simple kiosk-style flow.
+
+### Competition sequence
+
+Player 1 starts.
+
+Player 1 plays for 45 seconds.
+
+Player 1 enters their information.
+
+Player 1's score is saved.
+
+The leaderboard appears.
+
+Player 2 presses PLAY NOW.
+
+Player 2 plays.
+
+The process repeats.
+
+Only one active game should run in the current application instance.
+
+A new round must not start while a previous round has an unsaved score.
+
+Prevent accidental navigation that would discard a completed round.
+
+If the backend is unavailable, preserve the current score and form state for retry within the active session.
+
+Do not store personal information in localStorage.
+
+---
+
+# 15. SOUND DESIGN
+
+Implement fun, lightweight arcade sounds.
+
+Required sounds:
+
+- Countdown.
+- Game start.
+- Happy Cloud hit.
+- Royal Cloud hit.
+- Storm Cloud hit.
+- Chaos Cloud hit.
+- Combo activation.
+- Chaos Mode.
+- Final five seconds.
+- Game over.
+- New personal record.
+
+Provide a mute/unmute button.
+
+Use locally generated sounds or bundled audio assets.
+
+Do not rely on remote audio URLs.
+
+Respect browser autoplay restrictions.
+
+Avoid excessively loud or irritating sounds.
+
+---
+
+# 16. ANIMATION REQUIREMENTS
+
+The game should feel lively and professionally polished.
+
+Implement:
+
+- Cloud pop-up animation.
+- Cloud disappearing animation.
+- Hit squash animation.
+- Floating score numbers.
+- Royal Cloud golden sparkles.
+- Storm Cloud shake effect.
+- Combo multiplier glow.
+- Countdown animation.
+- Chaos Mode transition.
+- Game-over celebration.
+- New high-score confetti.
+- Smooth leaderboard entrance animations.
+- Button hover and press effects.
+
+Use CSS transforms and opacity where possible.
+
+Maintain smooth performance.
+
+Respect reduced-motion preferences.
+
+Avoid excessive flashing effects.
+
+---
+
+# 17. RESPONSIVE DESIGN
+
+The application must work on:
+
+- Desktop.
+- Laptop.
+- Tablet.
+- Smartphone.
+
+### Desktop
+
+Center the game board.
+
+Display score and timer above the board.
+
+Use an attractive arcade-style layout.
+
+### Mobile
+
+Ensure the 3×3 grid fits without scrolling during gameplay.
+
+Use large touch targets.
+
+Keep the timer visible.
+
+Avoid layout shifts.
+
+Use appropriate viewport sizing.
+
+Support portrait and landscape orientations where practical.
+
+---
+
+# 18. PROJECT STRUCTURE
+
+Use the following structure or a cleaner equivalent:
+
+```text
+cloud-whack/
+│
+├── frontend/
+│   ├── public/
+│   │   ├── logo.png
+│   │   └── sounds/
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── CloudCharacter.jsx
+│   │   │   ├── GameHole.jsx
+│   │   │   ├── GameBoard.jsx
+│   │   │   ├── ScoreDisplay.jsx
+│   │   │   ├── Timer.jsx
+│   │   │   ├── PlayerForm.jsx
+│   │   │   └── LeaderboardRow.jsx
+│   │   │
+│   │   ├── screens/
+│   │   │   ├── WelcomeScreen.jsx
+│   │   │   ├── ReadyScreen.jsx
+│   │   │   ├── GameScreen.jsx
+│   │   │   ├── GameOverScreen.jsx
+│   │   │   └── LeaderboardScreen.jsx
+│   │   │
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── styles/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── package.json
+│   └── vite.config.js
+│
+├── backend/
+│   ├── main.py
+│   ├── models.py
+│   ├── storage.py
+│   ├── game_sessions.py
+│   ├── scoring.py
+│   ├── requirements.txt
+│   │
+│   ├── data/
+│   │   └── players.csv
+│   │
+│   └── tests/
+│
+├── README.md
+├── .gitignore
+└── .env.example
+```
+
+Keep components reusable and code readable.
+
+Avoid putting all game logic inside a single React component.
+
+---
+
+# 19. TESTING REQUIREMENTS
+
+Create tests for critical functionality.
+
+### Gameplay tests
+
+- Correct score calculation.
+- Combo multipliers.
+- Negative point penalties.
+- Score never below zero.
+- One hit per appearance.
+- Character expiration.
+- Game timer expiration.
+- Difficulty transitions.
+- Game cleanup.
+
+### Backend tests
+
+- CSV file creation.
+- First player insertion.
+- Duplicate phone number detection.
+- Phone number normalization.
+- Best-score preservation.
+- Attempts incrementing.
+- Leaderboard sorting.
+- Invalid phone number rejection.
+- Invalid score rejection.
+- Duplicate session rejection.
+- CSV corruption handling.
+- Concurrent submission safety.
+
+### Integration tests
+
+Test this complete scenario:
+
+1. Player Youssef plays and scores 650.
+2. The score is saved.
+3. Player Amine plays and scores 800.
+4. Amine becomes first.
+5. Youssef plays again and scores 950.
+6. Youssef's existing CSV record is updated.
+7. Youssef becomes first.
+8. Youssef plays again and scores 400.
+9. Youssef's best score remains 950.
+10. Youssef's attempts become 3.
+11. The leaderboard contains only two unique players.
+
+This scenario must pass.
+
+---
+
+# 20. DEPLOYMENT AND DOCUMENTATION
+
+Provide a complete README containing:
+
+- Project overview.
+- Required software.
+- Installation instructions.
+- Backend startup commands.
+- Frontend startup commands.
+- Environment configuration.
+- CSV file location.
+- Instructions for replacing the logo.
+- Testing instructions.
+- Production build instructions.
+- Deployment recommendations.
+- Known security limitations.
+
+Ensure the project can run locally with commands similar to:
+
+Backend:
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+Frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Configure CORS appropriately for local development.
+
+For production, recommend serving the frontend and backend under the same origin and storing the CSV in a persistent, private directory.
+
+Do not assume an ephemeral hosting filesystem will preserve player records.
+
+---
+
+# 21. PRIVACY REQUIREMENTS
+
+Phone numbers are personal information.
+
+Therefore:
+
+- Never show phone numbers on the leaderboard.
+- Never include phone numbers in public API responses.
+- Never log full phone numbers unnecessarily.
+- Never commit real participant data to Git.
+- Do not store player details in browser localStorage.
+- Add a short consent/privacy notice before score submission.
+- Explain that the phone number is used to identify repeat players.
+- Restrict access to the CSV file.
+- Document how organizers can delete player records after the event.
+
+The phone number serves as an identifier, not verified authentication.
+
+Do not claim that entering a phone number proves ownership of it.
+
+---
+
+# 22. ADDITIONAL POLISH
+
+If time permits, add:
+
+### Champion announcement
+
+When a player beats the overall high score, display:
+
+"NEW CLOUD CHAMPION!"
+
+Use golden sparkles and a crown animation.
+
+### Rank reveal
+
+After score submission, reveal the player's ranking with a short animation.
+
+### Cloud mascot
+
+Use the Royal Cloud as a recurring visual mascot on the welcome and results screens.
+
+### Animated leaderboard
+
+Make ranking changes feel exciting.
+
+### Stand-friendly interface
+
+Use large readable text, prominent buttons, and simple navigation suitable for a public gaming stand.
+
+Do not add unnecessary features that delay completion of the core application.
+
+---
+
+# 23. IMPLEMENTATION PRIORITIES
+
+Follow this order:
+
+1. Create the React application and FastAPI backend.
+2. Implement the Cloud Clubs visual theme.
+3. Build the nine-hole game board.
+4. Create all four cloud characters.
+5. Implement spawning and hit detection.
+6. Implement scoring and combos.
+7. Implement timer and difficulty progression.
+8. Implement game-over flow.
+9. Implement player registration.
+10. Implement CSV storage and duplicate handling.
+11. Implement the leaderboard.
+12. Add game-session validation.
+13. Add animations and sound effects.
+14. Add responsive design.
+15. Write and run tests.
+16. Fix bugs and polish the final experience.
+
+Prioritize a complete, working game over unnecessary architectural complexity.
+
+---
+
+# 24. FINAL ACCEPTANCE CRITERIA
+
+The project is complete only when:
+
+- The game launches successfully.
+- The official Cloud Clubs branding is used.
+- All four cloud characters are implemented.
+- The nine-hole board works correctly.
+- Each round lasts 45 seconds.
+- Difficulty increases correctly.
+- Scoring and combos work.
+- Players can submit their names, filières, and phone numbers.
+- Player information is saved to CSV.
+- Phone numbers uniquely identify players.
+- Returning players keep their highest score.
+- Attempts are tracked correctly.
+- The leaderboard displays unique players in ranking order.
+- Phone numbers remain private.
+- The application works on mobile and desktop.
+- The game is visually polished.
+- The backend and frontend run without errors.
+- Critical tests pass.
+- The README contains working setup instructions.
+
+**Final instruction:**
+
+Build the complete application directly in the workspace.
+
+Do not provide only a development plan.
+
+Create the actual source files, implement the game, run available tests, fix errors, and provide a concise summary of the completed features and exact commands needed to launch the application.
+
+The final result should feel like a real, custom-built Cloud Clubs arcade experience that students will want to play repeatedly to beat their friends' scores.
